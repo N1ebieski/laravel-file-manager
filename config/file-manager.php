@@ -1,7 +1,7 @@
 <?php
 
 use Alexusmai\LaravelFileManager\Services\ConfigService\DefaultConfigRepository;
-use Alexusmai\LaravelFileManager\Services\ACLService\ConfigACLRepository;
+use N1ebieski\ICore\FileManager\Security\UsersACLRepository;
 
 return [
 
@@ -17,7 +17,7 @@ return [
      *
      * Default - ConfigACLRepository (see rules in - aclRules)
      */
-    'aclRepository' => ConfigACLRepository::class,
+    'aclRepository' => UsersACLRepository::class,
 
     //********* Default configuration for DefaultConfigRepository **************
 
@@ -25,20 +25,20 @@ return [
      * LFM Route prefix
      * !!! WARNING - if you change it, you should compile frontend with new prefix(baseUrl) !!!
      */
-    'routePrefix' => 'file-manager',
+    'routePrefix' => 'admin/file-manager',
 
     /**
      * List of disk names that you want to use
      * (from config/filesystems)
      */
-    'diskList' => ['public'],
+    'diskList' => ['public', 'views', 'css', 'lang'],
 
     /**
      * Default disk for left manager
      *
      * null - auto select the first disk in the disk list
      */
-    'leftDisk' => null,
+    'leftDisk' => 'public',
 
     /**
      * Default disk for right manager
@@ -83,19 +83,19 @@ return [
      *
      * null - no restrictions
      */
-    'maxUploadFileSize' => null,
+    'maxUploadFileSize' => 10240,
 
     /**
      * File upload - Allow these file types
      *
      * [] - no restrictions
      */
-    'allowFileTypes' => [],
+    'allowFileTypes' => ['jpeg', 'png', 'jpg', 'txt', 'doc', 'pdf'],
 
     /**
      * Show / Hide system files and folders
      */
-    'hiddenFiles' => true,
+    'hiddenFiles' => false,
 
     /***************************************************************************
      * Middleware
@@ -103,14 +103,20 @@ return [
      * Add your middleware name to array -> ['web', 'auth', 'admin']
      * !!!! RESTRICT ACCESS FOR NON ADMIN USERS !!!!
      */
-    'middleware' => ['web'],
+    'middleware' => [
+        'icore.web',
+        'auth',
+        'verified',
+        'permission:admin.access',
+        'permission:admin.filemanager.read'
+    ],
 
     /***************************************************************************
      * ACL mechanism ON/OFF
      *
      * default - false(OFF)
      */
-    'acl' => false,
+    'acl' => true,
 
     /**
      * Hide files and folders from file-manager if user doesn't have access
@@ -126,7 +132,7 @@ return [
      *
      * whitelist - Deny anything(access - 0 - deny), that not allowed by the ACL rules list
      */
-    'aclStrategy' => 'blacklist',
+    'aclStrategy' => 'whitelist',
 
     /**
      * ACL Rules cache
