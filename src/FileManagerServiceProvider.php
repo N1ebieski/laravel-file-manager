@@ -37,8 +37,13 @@ class FileManagerServiceProvider extends ServiceProvider
         // publish js and css files - vue-file-manager module
         $this->publishes([
             __DIR__
-            .'/../resources/assets' => public_path('vendor/file-manager'),
-        ], 'fm-assets');
+            .'/../resources/assets/css' => public_path('css/vendor/file-manager'),
+        ], 'fm-css');
+
+        $this->publishes([
+            __DIR__
+            .'/../resources/assets/js' => public_path('js/vendor/file-manager'),
+        ], 'fm-js');
 
         // publish migrations
         $this->publishes([

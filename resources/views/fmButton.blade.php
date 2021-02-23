@@ -7,12 +7,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'File Manager') }}</title>
+    <title>{{ $makeMeta(array_merge([trans('icore::filemanager.route.index')], [trans('icore::admin.route.index'), config('app.name')]), ' - ') }}</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
-    <link href="{{ asset('vendor/file-manager/css/file-manager.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ asset('svg/vendor/icore/logo.svg') }}" type="image/svg+xml">
+    <link href="{{ mix('css/vendor/icore/vendor/vendor.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/vendor/file-manager/file-manager.css') }}" rel="stylesheet">    
+    <link href="{{ mix($getStylesheet()) }}" rel="stylesheet">
+    <link href="{{ asset($getStylesheet('css/custom')) }}" rel="stylesheet">    
 </head>
 <body>
 <div class="container-fluid">
@@ -24,19 +26,18 @@
 </div>
 
 <!-- File manager -->
-<script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
+<script src="{{ asset('js/vendor/file-manager/file-manager.js') }}"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     // set fm height
     document.getElementById('fm-main-block').setAttribute('style', 'height:' + window.innerHeight + 'px');
 
     // Add callback to file manager
     fm.$store.commit('fm/setFileCallBack', function(fileUrl) {
-      window.opener.fmSetLink(fileUrl);
-      window.close();
+        window.opener.fmSetLink(fileUrl);
+        window.close();
     });
-  });
+});
 </script>
 </body>
 </html>
-
