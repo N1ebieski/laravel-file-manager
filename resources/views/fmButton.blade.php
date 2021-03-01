@@ -10,10 +10,10 @@
     <title>{{ $makeMeta(array_merge([trans('icore::filemanager.route.index')], [trans('icore::admin.route.index'), config('app.name')]), ' - ') }}</title>
 
     <!-- Styles -->
-    <link rel="icon" href="{{ asset('svg/vendor/icore/logo.svg') }}" type="image/svg+xml">
-    <link href="{{ mix('css/vendor/icore/vendor/vendor.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ asset('svg/vendor/' . config('idir.layout') . '/logo.svg') }}" type="image/svg+xml">
+    <link href="{{ mix('css/vendor/' . config('idir.layout') . '/vendor/vendor.css') }}" rel="stylesheet">
     <link href="{{ asset('css/vendor/file-manager/file-manager.css') }}" rel="stylesheet">    
-    <link href="{{ mix($getStylesheet()) }}" rel="stylesheet">
+    <link href="{{ mix($getStylesheet('css/vendor/' . config('idir.layout'))) }}" rel="stylesheet">
     <link href="{{ asset($getStylesheet('css/custom')) }}" rel="stylesheet">    
 </head>
 <body>
